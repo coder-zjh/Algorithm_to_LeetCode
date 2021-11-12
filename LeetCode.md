@@ -1,14 +1,19 @@
 # LeetCode
 
+> LeetCode刷题笔记，记录刷题过程中的某些思路、代码、涉及知识点和解题Tips。
+
 ## Easy
 
 #### [1. 两数之和](https://leetcode-cn.com/problems/two-sum/)
+
+1. 双循环嵌套做法，思路直接但较低效，代码略。
+
+2. 哈希表做法，利用hash表存放数组的值与下标，如果target减去当前数组值的所得结果在哈希表中，则得出答案。
 
 ```java
 class Solution {
     public int[] twoSum(int[] nums, int target) {
         HashMap<Integer,Integer> hm = new HashMap<>();
-
         for(int i=0;i<nums.length;i++){
             if(hm.containsKey(target-nums[i])){
                 return new int[]{hm.get(target-nums[i]),i};
@@ -22,6 +27,9 @@ class Solution {
 ```
 
 #### [7. 整数反转](https://leetcode-cn.com/problems/reverse-integer/)
+
+1. 字符串做法，直接利用StringBuffer的reverse()方法，利用api不训练码力，代码略。
+2. 数学做法，具体解释见TSP：从后向前还原数字的代码。
 
 ```java
 class Solution {
@@ -41,6 +49,9 @@ class Solution {
 ```
 
 #### [9. 回文数](https://leetcode-cn.com/problems/palindrome-number/)
+
+1. 字符串做法，直接利用StringBuffer的reverse()方法，利用api不训练码力，代码略。
+2. 数学做法，具体解释见TSP：从后向前还原数字的代码。
 
 ```java
 class Solution {
@@ -65,6 +76,8 @@ class Solution {
 ```
 
 #### [13. 罗马数字转整数](https://leetcode-cn.com/problems/roman-to-integer/)
+
+找到罗马数字组成的规律，就很好解决。
 
 ```java
 class Solution {
@@ -103,6 +116,8 @@ class Solution {
 
 #### [14. 最长公共前缀](https://leetcode-cn.com/problems/longest-common-prefix/)
 
+
+
 ```java
 class Solution {
     public String longestCommonPrefix(String[] strs) {
@@ -112,7 +127,6 @@ class Solution {
         // 理解这句话：公共前缀比所有字符串都短，所以可以随便选一个
         // 随便先选第一个字符串的值作为公共前缀
         String s = strs[0];
-
         // 遍历每一个数组元素
         for(String str:strs){
             while(!str.startsWith(s)){
@@ -130,6 +144,8 @@ class Solution {
 ```
 
 #### [20. 有效的括号](https://leetcode-cn.com/problems/valid-parentheses/)
+
+利用栈，遍历字符串中每个字符，遇到题中所提字符，则用栈存放该字符的对应字符，如果下一个字符与栈中最新元素相等，则说明匹配上了，而如果栈是空，则说明出现了非所提字符的情况，或是下一个字符与栈中最新元素不等，则说明出现了不匹配的情况。
 
 ```java
 class Solution {
@@ -161,6 +177,9 @@ class Solution {
 
 #### [58. 最后一个单词的长度](https://leetcode-cn.com/problems/length-of-last-word/)
 
+1. 
+2. 从后往前的做法
+
 ```java
 class Solution {
     public int lengthOfLastWord(String s) {
@@ -191,6 +210,8 @@ class Solution {
 ```
 
 #### [121. 买卖股票的最佳时机](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/)
+
+DP做法，
 
 ```java
 class Solution {
@@ -262,17 +283,127 @@ class Solution {
 }
 ```
 
+#### [509. 斐波那契数](https://leetcode-cn.com/problems/fibonacci-number/)
+
+1. 递归做法
+
+```java
+// 有多种做法
+class Solution {
+    public int fib(int n) {
+        if(n<=1){
+            return n;
+        }
+        return fib(n-1)+fib(n-2);
+    }
+}
+```
+
+2. DP做法
+
+```java
+
+```
+
+
+
+#### [1118. 一月有多少天](https://leetcode-cn.com/problems/number-of-days-in-a-month/)
+
+这题不讨论，主要是对闰年及其所属月份的了解。
+
+```java
+class Solution {
+    public int numberOfDays(int Y, int M) {
+        int[] runnian = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // 闰年
+        int[] norunnian = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // 非闰年
+        if((Y % 100 != 0 && Y % 4 == 0) || Y % 400 == 0) {
+            return runnian[M-1];
+        }
+        return norunnian[M-1];
+    }
+}
+```
+
+
+
+
+
 #### [217. 存在重复元素](https://leetcode-cn.com/problems/contains-duplicate/)
+
+1. 去重做法，去重后长度小于原长度，则表明存在重复值。
 
 ```java
 class Solution {
     public boolean containsDuplicate(int[] nums) {
-        // 去重做法：去重后长度小于原长度，则表明存在重复值
         Set<Integer> s = new HashSet<>();
         for(int num:nums){
             s.add(num);
         }
         return s.size()<nums.length?true:false;
+    }
+}
+```
+
+
+
+
+
+#### [1876. 长度为三且各字符不同的子字符串](https://leetcode-cn.com/problems/substrings-of-size-three-with-distinct-characters/)
+
+```java
+class Solution {
+    public int countGoodSubstrings(String s) {
+        if(s.length()<3){
+            return 0;
+        }
+        int count =0;
+        //注意循环结束条件的取值范围,指针只要取到倒数第三位即可
+        for(int i=0;i<s.length()-2;i++){
+            if((s.charAt(i)!=s.charAt(i+1))&&(s.charAt(i+1)!=s.charAt(i+2))&&(s.charAt(i)!=s.charAt(i+2))){
+                count++;
+            }
+        }
+        return count;
+    }
+}
+```
+
+#### [LCP 01. 猜数字](https://leetcode-cn.com/problems/guess-numbers/)
+
+不讨论，较为简单。
+
+```java
+class Solution {
+    public int game(int[] guess, int[] answer) {
+        int count = 0;
+        for(int i=0;i<3;i++){
+            if(guess[i]==answer[i]){
+                count++;
+            }
+        }
+        return count;
+    }
+}
+```
+
+#### [1085. 最小元素各数位之和](https://leetcode-cn.com/problems/sum-of-digits-in-the-minimum-number/)
+
+先得出数组最小值，然后根据TSP：从后向前还原数字的代码 做各数位加和，最后判断奇偶。
+
+```java
+class Solution {
+    public int sumOfDigits(int[] nums) {
+        int min = nums[0];
+      // 需要了解一下为什么不用Arrays.sort()?
+        for(int i=0;i<nums.length;i++){
+            min = Math.min(min,nums[i]);
+        }
+        int sum=0;
+        while(min!=0){
+            sum+=min%10;
+            min/=10;
+        }
+        return sum%2==0?1:0;
     }
 }
 ```
@@ -338,6 +469,12 @@ while (x != 0) {
 }
 System.out.println("n=" + n);
 ```
+
+
+
+## 题中涉及的知识点
+
+#### Arrays.sort()详解
 
 
 
