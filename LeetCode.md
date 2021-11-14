@@ -464,6 +464,217 @@ class Solution {
 }
 ```
 
+#### [1491. 去掉最低工资和最高工资后的工资平均值](https://leetcode-cn.com/problems/average-salary-excluding-the-minimum-and-maximum-salary/)
+
+排序，然后加和范围是去掉最大最小值的中间那些数。
+
+```java
+class Solution {
+    public double average(int[] salary) {
+        Arrays.sort(salary);
+        int sum=0;
+        for(int i=1;i<salary.length-1;i++){
+            sum+=salary[i];
+        }
+        return sum/(salary.length-2.0);
+    }
+}
+```
+
+#### [1550. 存在连续三个奇数的数组](https://leetcode-cn.com/problems/three-consecutive-odds/)
+
+计数思路，遇到奇数就加1，当计数cnt到达3就退出。
+
+```java
+class Solution {
+    public boolean threeConsecutiveOdds(int[] arr) {
+        int cnt = 0;
+        for(int a:arr){
+            if(a%2!=0){
+                cnt++;
+            }else{
+                cnt=0;
+            }
+            if(cnt==3){
+                return true;
+            }
+        }
+        return false;
+    }
+}
+```
+
+#### [441. 排列硬币](https://leetcode-cn.com/problems/arranging-coins/)
+
+当前硬币数大于等于下一层阶梯的位置数时，则当前硬币数为可排满下一层，如不满足，返回上一层台阶的序号。
+
+```java
+class Solution {
+    public int arrangeCoins(int n) {
+        // 每层可放置的个数，同时也是台阶序号
+        int cnt = 1;
+        while(n>=cnt){
+            n = n-cnt;
+            cnt++;
+        }
+        return cnt-1;
+    }
+}
+```
+
+#### [485. 最大连续 1 的个数](https://leetcode-cn.com/problems/max-consecutive-ones/)
+
+遍历数组，当遇到1时计数，遇到0时说明1的序列断开，此时统计下max，同时计数清零。循环结束后，拿此时的cnt和统计的max再做一次比较。
+
+```java
+class Solution {
+    public int findMaxConsecutiveOnes(int[] nums) {
+        int cnt = 0;
+        int max = 0;
+        for(int i:nums){
+            if(i==1){
+                cnt++;
+            }else{
+                max = Math.max(max,cnt);
+                cnt=0;
+            }
+        }
+        return Math.max(max,cnt);
+    }
+}
+```
+
+#### [LCP 06. 拿硬币](https://leetcode-cn.com/problems/na-ying-bi/)
+
+找到规律的做法
+
+```java
+class Solution {
+    public int minCount(int[] coins) {
+        int cnt = 0;
+        for(int i:coins){
+            if(i%2==0){
+                cnt+=i/2;
+            }else{
+                cnt+=i/2+1;
+            }
+        }
+        return cnt;
+    }
+}
+```
+
+另一种办法，
+
+```java
+class Solution {
+    public int minCount(int[] coins) {
+        int cnt = 0;
+        for(int i:coins){
+            while(i>0){
+                cnt++;
+                i-=2;
+            }
+        }
+        return cnt;
+    }
+}
+```
+
+#### [1281. 整数的各位积和之差](https://leetcode-cn.com/problems/subtract-the-product-and-sum-of-digits-of-an-integer/)
+
+利用TSP：从后向前还原数字的代码的思路。
+
+```java
+class Solution {
+    public int subtractProductAndSum(int n) {
+        int ji = 1,he = 0;
+        while(n!=0){
+            ji *= n%10;
+            he += n%10;
+            n/=10;
+        }
+        return ji-he;
+    }
+}
+```
+
+#### [1295. 统计位数为偶数的数字](https://leetcode-cn.com/problems/find-numbers-with-even-number-of-digits/)
+
+1. String.valueOf()方法，不提升码力，代码略。
+2. 使用TSP：从后往前还原数字的代码 的思路。
+
+```java
+class Solution {
+    public int findNumbers(int[] nums) {
+        //偶数个数的计数
+        int cnt =0;
+        for(int i:nums){
+            // 位数的计数n
+            int n  = 0;
+            while(i>0){
+                i/=10;
+                n++;
+            }
+            cnt+=n%2==0?1:0;//这种风格可以学下
+        }
+        return cnt;
+    }
+}
+```
+
+#### [1323. 6 和 9 组成的最大数字](https://leetcode-cn.com/problems/maximum-69-number/)
+
+要最大数字，肯定是把高位的6改成9。利用String类的replaceFirst方法。
+
+```java
+class Solution {
+    public int maximum69Number (int num) {
+        return Integer.valueOf(String.valueOf(num).replaceFirst("6","9"));
+    }
+}
+```
+
+#### [1475. 商品折扣后的最终价格](https://leetcode-cn.com/problems/final-prices-with-a-special-discount-in-a-shop/)
+
+1. 双循环做法，比较直观，易理解。
+
+```java
+class Solution {
+    public int[] finalPrices(int[] prices) {
+        for(int i=0;i<prices.length-1;i++){
+            for(int j=i+1;j<prices.length;j++){
+                if(prices[i]>=prices[j]){
+                    prices[i] -=prices[j];
+                    break;
+                }
+            }
+        }
+        return prices;
+    }
+}
+```
+
+2. 单调栈做法，学习一下
+
+```java
+class Solution {
+    public int[] finalPrices(int[] prices) {
+        Stack<Integer> s=new Stack<>();
+        for(int i=0;i<prices.length;i++){
+            //能在栈里面呆着说明还没找到右边第一个比它小的
+            while(!s.isEmpty()&&prices[s.peek()]>=prices[i]){
+                prices[s.pop()]-=prices[i];
+            }
+            s.push(i);
+        }
+        return prices;
+    }
+}
+```
+
+
+
 
 
 
@@ -526,9 +737,11 @@ while (x != 0) {
 System.out.println("n=" + n);
 ```
 
+#### 欧几里得算法/辗转相除法
 
 
-## 题中涉及的知识点
+
+## 题中涉及的Java知识点
 
 #### Arrays.sort()详解
 
