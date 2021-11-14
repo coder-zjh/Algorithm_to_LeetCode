@@ -673,6 +673,44 @@ class Solution {
 }
 ```
 
+#### [1304. 和为零的N个唯一整数](https://leetcode-cn.com/problems/find-n-unique-integers-sum-up-to-zero/)
+
+```java
+```
+
+#### [1342. 将数字变成 0 的操作次数](https://leetcode-cn.com/problems/number-of-steps-to-reduce-a-number-to-zero/)
+
+比较容易，不讨论。
+
+```java
+class Solution {
+    public int numberOfSteps(int num) {
+        int cnt = 0;
+        while(num!=0){
+            if(num%2==0){
+                num/=2;
+            }else{
+                num-=1;
+            }
+            cnt++;
+        }
+        return cnt;
+    }
+}
+```
+
+#### [28. 实现 strStr()](https://leetcode-cn.com/problems/implement-strstr/)
+
+1. 直接使用String.indexOf，不提升码力。
+
+```java
+class Solution {
+    public int strStr(String haystack, String needle) {
+        return haystack.indexOf(needle);
+    }
+}
+```
+
 
 
 
