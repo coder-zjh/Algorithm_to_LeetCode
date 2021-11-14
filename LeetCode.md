@@ -770,7 +770,7 @@ int gcd(int m,int n)
 
 
 
-## 代码片段
+## 常用代码片段
 
 #### test
 
