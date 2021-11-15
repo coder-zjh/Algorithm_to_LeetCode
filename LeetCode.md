@@ -711,6 +711,40 @@ class Solution {
 }
 ```
 
+2. 
+
+```java
+```
+
+
+
+#### [125. 验证回文串](https://leetcode-cn.com/problems/valid-palindrome/)
+
+```java
+class Solution {
+    public boolean isPalindrome(String s) {
+        s = s.toLowerCase();
+        int left = 0,right = s.length()-1;
+        while(left<right){
+            while(left<right&&!Character.isLetterOrDigit(s.charAt(left))){
+                left++;
+            }   
+            while(left<right&&!Character.isLetterOrDigit(s.charAt(right))){
+                right--;
+            }
+            if(s.charAt(left)!=s.charAt(right)){
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+}
+```
+
+
+
 
 
 
