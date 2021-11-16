@@ -720,25 +720,113 @@ class Solution {
 
 #### [125. 验证回文串](https://leetcode-cn.com/problems/valid-palindrome/)
 
+双指针做法，最左边和最右边设置起始指针，左指针向右走(++)，右指针向左走(--)，遇到非字母和数字就继续走，遇见字母和数字时，检查当前左指针是否超过右指针，如不超过，则检查各自指针所指的值是否相等，一旦过程中有不符合的，就退出。
+
 ```java
 class Solution {
     public boolean isPalindrome(String s) {
         s = s.toLowerCase();
         int left = 0,right = s.length()-1;
         while(left<right){
+            // 左指针向右，当左指针小于右指针且当前位置非字母和数字时，向右移动一位。
             while(left<right&&!Character.isLetterOrDigit(s.charAt(left))){
                 left++;
             }   
+            // 右指针向左，当右指针大于左指针且当前位置非字母和数字时，向左移动一位。
             while(left<right&&!Character.isLetterOrDigit(s.charAt(right))){
                 right--;
             }
+            // 此时左右指针都停在字母或数字上，比较两值是否相等，如果不相等就说明不对称，退出。
             if(s.charAt(left)!=s.charAt(right)){
                 return false;
+            }
+            // 如果两值相等的话，继续各自进一位，
+            // 然后继续执行上面代码，直到各自又遇到字母或数字时比较，
+            // 如果已经是left>=right时，说明两指针已经相遇，则退出循环。
+            left++;
+            right--;
+        }
+        return true;
+    }
+}
+```
+
+#### [680. 验证回文字符串 Ⅱ](https://leetcode-cn.com/problems/valid-palindrome-ii/)
+
+```java
+class Solution {
+    public boolean validPalindrome(String s) {
+        int left = 0,right = s.length()-1;
+        while(left<right){
+            if(s.charAt(left)!=s.charAt(right)){
+                return flag(s,left+1,right)||flag(s,left,right-1);
             }
             left++;
             right--;
         }
         return true;
+    }
+
+    // 判断子字符串是否回文
+    public boolean flag(String s,int left,int right){
+        while(left<right){
+            if(s.charAt(left++)!=s.charAt(right--)){
+                return false;
+            }
+        }
+        return true;
+    }
+}
+```
+
+#### [26. 删除有序数组中的重复项](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/)
+
+因为是有序数组，所以比较前后两个值是否相同，如果相同说明重复，下标前进一步，同时当前值换为后值；如果不同则继续。
+
+```java
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int i=0;
+        if(nums.length<2){
+            return nums.length;
+        }
+        for(int j=1;j<nums.length;j++){
+            if(nums[i]!=nums[j]){
+                i++;//i为多少则重复的数有多少
+                nums[i]=nums[j];
+            }
+        }
+        return i+1;
+    }
+}
+```
+
+#### [1464. 数组中两元素的最大乘积](https://leetcode-cn.com/problems/maximum-product-of-two-elements-in-an-array/)
+
+1. 先用Arrays.sort()排序，然后将后两位做如题的乘法。代码略。
+2. O(n)算出数组中最大的两个数，这个代码可以思考学习。
+
+```java
+class Solution {
+    public int maxProduct(int[] nums) {
+        if(nums.length == 2){
+            return (nums[0] - 1) * (nums[1] - 1);
+        }
+        // n1最大值，n2次大值
+        int n1=0,n2=0;
+        /**
+            遍历数组，遇到比最大值n1大的nums[i]，说明此时nums[i]是最大，同时，次大值变为了n1，注意这里的赋值顺序。
+            继续遍历，如果出现了比次大值更大的nums[i]，则替换次大值。
+         */
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]>n1){
+                n2 = n1;
+                n1 = nums[i];
+            }else if(nums[i]>n2){
+                n2 = nums[i];
+            }
+        }
+        return (n1-1)*(n2-1);
     }
 }
 ```
@@ -751,7 +839,64 @@ class Solution {
 
 
 
+
+
 ## Medium
+
+#### [1423. 可获得的最大点数](https://leetcode-cn.com/problems/maximum-points-you-can-obtain-from-cards/)
+
+滑动窗口解法，窗口包裹着头尾两端的k个数，算这k个数的最大值。
+
+```java
+class Solution {
+    public int maxScore(int[] cardPoints, int k) {
+        // 定义窗口值的最大值
+        int maxWindow = 0,length = cardPoints.length;
+        // 先统计前k个元素的和，即当前窗口的值
+        for(int i=0;i<k;i++){
+            maxWindow+=cardPoints[i];
+        }
+        // 此时的窗口值就是数组前三位相加的和。
+        int windowSum = maxWindow;
+        // 窗口左移，左移一位，则右端进入一个数，最多进入k个数，下标到达length-k。
+        for(int i=length-1;i>=length-k;i--){
+            // 窗口左移，踢出窗口中少掉的那个值
+            windowSum -= cardPoints[k-(length-i)];
+            // 窗口左移，加上进入窗口的那个值
+            windowSum += cardPoints[i];
+            // 比较最大值与当期窗口值，得出新窗口最大值
+            maxWindow = Math.max(maxWindow,windowSum);
+        }
+
+        return maxWindow;
+    }
+}
+```
+
+#### [11. 盛最多水的容器](https://leetcode-cn.com/problems/container-with-most-water/)
+
+1. 双层循环，思路简单，但是超时。
+
+2. 双指针向内逼近做法：
+
+   面积公式=两指针高度最小值*两指针下标之差，因此两指针缩小距离的话，需要高度上做出补偿，即矮轴要向内探索更高轴。
+
+   过程中左轴下标要小于右轴下标。
+
+```java
+class Solution {
+    public int maxArea(int[] height) {
+        int max = 0,minHeight = 0;
+        for(int i=0,j=height.length-1;i<j;){
+            minHeight = height[i]<height[j]?height[i++]:height[j--];
+            max = Math.max(max,minHeight*(j-i+1));
+        }
+        return max;
+    }
+}
+```
+
+
 
 
 
