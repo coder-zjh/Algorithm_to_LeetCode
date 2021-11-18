@@ -29,7 +29,10 @@ class Solution {
 #### [7. 整数反转](https://leetcode-cn.com/problems/reverse-integer/)
 
 1. 字符串做法，直接利用StringBuffer的reverse()方法，利用api不训练码力，代码略。
+
 2. 数学做法，具体解释见TSP：从后向前还原数字的代码。
+
+   题中有个隐藏的坑，x是有范围的，如果翻转后超出范围则不能算翻转
 
 ```java
 class Solution {
@@ -1099,6 +1102,10 @@ int x = 102333;
 int n = (int)(Math.log10(x)+1);//6
 ```
 
+#### 关于子字符串
+
+对于一个字符串的子字符串
+
 
 
 ## 题中涉及的Java知识点
@@ -1106,8 +1113,4 @@ int n = (int)(Math.log10(x)+1);//6
 #### Arrays.sort()详解
 
 
-
-## 常用代码片段
-
-#### test
 
