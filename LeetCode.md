@@ -831,6 +831,119 @@ class Solution {
 }
 ```
 
+#### [628. 三个数的最大乘积](https://leetcode-cn.com/problems/maximum-product-of-three-numbers/)
+
+较简单，不讨论，注意负数情况。
+
+```java
+class Solution {
+    public int maximumProduct(int[] nums) {
+        Arrays.sort(nums);
+        int length = nums.length-1;
+        return Math.max(nums[length]*nums[length-1]*nums[length-2],nums[0]*nums[1]*nums[length]);
+    }
+}
+```
+
+#### [412. Fizz Buzz](https://leetcode-cn.com/problems/fizz-buzz/)
+
+比较简单，注意for的条件即可。
+
+```java
+class Solution {
+    public List<String> fizzBuzz(int n) {
+        ArrayList<String> answer = new ArrayList<>();
+        for(int i=1;i<=n;i++){
+            if(i%3==0&&i%5==0){
+                answer.add("FizzBuzz");
+            }else if(i%3==0){
+                answer.add("Fizz");
+            }else if(i%5==0){
+                answer.add("Buzz");
+            }else{
+                answer.add(String.valueOf(i));
+            }
+        }
+        return answer;
+    }
+}
+```
+
+#### [258. 各位相加](https://leetcode-cn.com/problems/add-digits/)
+
+考验数学，不讨论。
+
+```java
+class Solution {
+    public int addDigits(int num) {
+        return (num-1)%9+1;
+    }
+}
+```
+
+#### [1134. 阿姆斯特朗数](https://leetcode-cn.com/problems/armstrong-number/)
+
+主要是利用TSP：Math.log10计算数字位数
+
+```java
+class Solution {
+    public boolean isArmstrong(int n) {
+        int k  = (int)Math.log10(n)+1;
+        int sum = 0,N = n;
+        while(n!=0){
+            sum+=Math.pow(n%10,k);
+            n/=10;
+        }
+        return sum==N?true:false;
+    }
+}
+```
+
+#### [1154. 一年中的第几天](https://leetcode-cn.com/problems/day-of-the-year/)
+
+不讨论，数学题。
+
+```java
+class Solution {
+    public int dayOfYear(String date) {
+        int year = Integer.parseInt(date.substring(0,4));
+        int month = Integer.parseInt(date.substring(5,7));
+        int day = Integer.parseInt(date.substring(8));
+        int[] monthArray = {31,28,31,30,31,30,31,31,30,31,30,31};
+        if((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+            monthArray[1] = 29;
+        }
+        int sum = 0;
+        for (int i = 0; i < month - 1; i++) {
+            sum += monthArray[i];
+        }
+        sum += day;
+        return sum;
+    }
+}
+```
+
+#### [1822. 数组元素积的符号](https://leetcode-cn.com/problems/sign-of-the-product-of-an-array/)
+
+定义一个负数标记，当数组中有0时，积为0；当出现偶数个负数时，积为整数，出现奇数个负数时，积为负数。
+
+```java
+class Solution {
+    public int arraySign(int[] nums) {
+        boolean isNegative = false;
+        for(int num:nums){
+            if(num==0){
+                return 0;
+            }
+            if(num<0){
+                isNegative=!isNegative;
+            }
+        }
+        return isNegative?-1:1;
+    }
+}
+```
+
 
 
 
@@ -977,6 +1090,13 @@ int gcd(int m,int n)
     int r = m%n;
     return gcd(n,r);
 }
+```
+
+#### Math.log10计算数字位数
+
+```java
+int x = 102333;
+int n = (int)(Math.log10(x)+1);//6
 ```
 
 
