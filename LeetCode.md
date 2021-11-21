@@ -30,7 +30,7 @@ class Solution {
 
 1. 字符串做法，直接利用StringBuffer的reverse()方法，利用api不训练码力，代码略。
 
-2. 数学做法，具体解释见TSP：从后向前还原数字的代码。
+2. 数学做法，具体解释见TSP：逆推数字
 
    题中有个隐藏的坑，x是有范围的，如果翻转后超出范围则不能算翻转
 
@@ -54,7 +54,7 @@ class Solution {
 #### [9. 回文数](https://leetcode-cn.com/problems/palindrome-number/)
 
 1. 字符串做法，直接利用StringBuffer的reverse()方法，利用api不训练码力，代码略。
-2. 数学做法，具体解释见TSP：从后向前还原数字的代码。
+2. 数学做法，具体解释见TSP：逆推数字。
 
 ```java
 class Solution {
@@ -236,23 +236,6 @@ class Solution {
 }
 ```
 
-#### [136. 只出现一次的数字](https://leetcode-cn.com/problems/single-number/)
-
-```java
-class Solution {
-    public int singleNumber(int[] nums) {
-        // 如果a、b两个值不相同，则异或结果为1。如果a、b两个值相同，异或结果为0。
-        // 不需要额外空间的方法，就往位运算上想
-        // 异或运算有以下三个性质：
-        // 1、任何数和 0 做异或运算，结果仍然是原来的数
-        // 2、任何数和其自身做异或运算，结果是 0
-        // 3、异或运算满足交换律和结合律
-
-        return Arrays.stream(nums).reduce((a,b)->a^b).getAsInt();
-    }
-}
-```
-
 #### [169. 多数元素](https://leetcode-cn.com/problems/majority-element/)
 
 ```java
@@ -382,7 +365,7 @@ class Solution {
 
 #### [1085. 最小元素各数位之和](https://leetcode-cn.com/problems/sum-of-digits-in-the-minimum-number/)
 
-先得出数组最小值，然后根据TSP：从后向前还原数字的代码 做各数位加和，最后判断奇偶。
+先得出数组最小值，然后根据TSP：逆推数字 做各数位加和，最后判断奇偶。
 
 ```java
 class Solution {
@@ -586,7 +569,7 @@ class Solution {
 
 #### [1281. 整数的各位积和之差](https://leetcode-cn.com/problems/subtract-the-product-and-sum-of-digits-of-an-integer/)
 
-利用TSP：从后向前还原数字的代码的思路。
+利用TSP：逆推数字的思路。
 
 ```java
 class Solution {
@@ -605,7 +588,7 @@ class Solution {
 #### [1295. 统计位数为偶数的数字](https://leetcode-cn.com/problems/find-numbers-with-even-number-of-digits/)
 
 1. String.valueOf()方法，不提升码力，代码略。
-2. 使用TSP：从后往前还原数字的代码 的思路。
+2. 使用TSP：逆推数字 的思路。
 
 ```java
 class Solution {
@@ -872,36 +855,6 @@ class Solution {
 }
 ```
 
-#### [258. 各位相加](https://leetcode-cn.com/problems/add-digits/)
-
-考验数学，不讨论。
-
-```java
-class Solution {
-    public int addDigits(int num) {
-        return (num-1)%9+1;
-    }
-}
-```
-
-#### [1134. 阿姆斯特朗数](https://leetcode-cn.com/problems/armstrong-number/)
-
-主要是利用TSP：Math.log10计算数字位数
-
-```java
-class Solution {
-    public boolean isArmstrong(int n) {
-        int k  = (int)Math.log10(n)+1;
-        int sum = 0,N = n;
-        while(n!=0){
-            sum+=Math.pow(n%10,k);
-            n/=10;
-        }
-        return sum==N?true:false;
-    }
-}
-```
-
 #### [1154. 一年中的第几天](https://leetcode-cn.com/problems/day-of-the-year/)
 
 不讨论，数学题。
@@ -947,7 +900,246 @@ class Solution {
 }
 ```
 
+#### [1716. 计算力扣银行的钱](https://leetcode-cn.com/problems/calculate-money-in-leetcode-bank/)
 
+```java
+```
+
+#### [1228. 等差数列中缺失的数字](https://leetcode-cn.com/problems/missing-number-in-arithmetic-progression/)
+
+由题意，收尾数字不删，只删中间一个数字，所以可以利用等差数列求和公式减去数组加和
+
+```java
+class Solution {
+    public int missingNumber(int[] arr) {
+        int sum_all = (arr.length+1)*(arr[0]+arr[arr.length-1])/2;
+        int sum=0;
+        for(int i:arr){
+            sum+=i;
+        }
+        return sum_all-sum;
+    }
+}
+```
+
+#### [1812. 判断国际象棋棋盘中一个格子的颜色](https://leetcode-cn.com/problems/determine-color-of-a-chessboard-square/)
+
+由题可知，字符和为奇数为白色，反之黑色。
+
+```java
+class Solution {
+    public boolean squareIsWhite(String coordinates) {
+        if((coordinates.charAt(0)+coordinates.charAt(1))%2==0){
+            return false;
+        }
+        return true;
+    }
+}
+```
+
+
+
+
+
+#### ==迷==
+
+#### [292. Nim 游戏](https://leetcode-cn.com/problems/nim-game/)
+
+1.  DP做法，待补充
+
+2. TSP:巴什博奕，但不提升码力
+
+```java
+class Solution {
+    public boolean canWinNim(int n) {
+        return n%4!=0?true:false;
+    }
+}
+```
+
+#### [1025. 除数博弈](https://leetcode-cn.com/problems/divisor-game/)
+
+由题意可得以下推论：n至少是2、谁最后拿到2时谁赢
+
+如果a拿到奇数，由条件n%x==0可知，x必为奇数，b拿到的n-x必为偶数，此时b拿到偶数减1，则a拿到的必为奇数，以上情况继续，最后b拿到最小偶数，b赢。
+
+反之，如果a拿到偶数，至少减1，则给到b的就是奇数，至少减1，那么给到a就是偶数，如此，到最后就是a得到最小偶数，a赢。
+
+综上，只要看n是否为偶数，偶数则true，奇数false。
+
+```java
+class Solution {
+    public boolean divisorGame(int n) {
+        return n%2==0?true:false;
+    }
+}
+```
+
+
+
+#### ==位运算==
+
+#### [67. 二进制求和](https://leetcode-cn.com/problems/add-binary/)
+
+```java
+```
+
+#### [136. 只出现一次的数字](https://leetcode-cn.com/problems/single-number/)
+
+利用异或
+
+```java
+class Solution {
+    public int singleNumber(int[] nums) {
+        return Arrays.stream(nums).reduce((a,b)->a^b).getAsInt();
+    }
+}
+```
+
+#### ==双指针==
+
+#### [344. 反转字符串](https://leetcode-cn.com/problems/reverse-string/)
+
+1. 双指针两端向内替换
+
+```java
+class Solution {
+    public void reverseString(char[] s) {
+        char left,right;
+        for(int i=0,j=s.length-1;i<j;i++,j--){
+            // 获取左指针值
+            left = s[i];
+            // 获取右指针值
+            right = s[j];
+            // 将数组右边的值改成左指针值
+            s[j] = left;
+            // 将数组左边的值改成右指针值
+            s[i] = right;
+        }
+    }
+}
+```
+
+2. 下标折半法
+
+   左下标和右下标是有对应关系的
+
+```java
+class Solution {
+    public void reverseString(char[] s) {
+        char temp;
+        for(int i=0;i<s.length/2;i++){
+            temp = s[i];
+            s[i] = s[s.length-i-1];
+            s[s.length-i-1] = temp;
+        }
+    }
+}
+```
+
+#### [167. 两数之和 II - 输入有序数组](https://leetcode-cn.com/problems/two-sum-ii-input-array-is-sorted/)
+
+双指针法，共同向内逼近，因为是有序数组，所以如果双指针加和如果大于target，j减1，反之i加1。
+
+```java
+class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        for(int i=0,j=numbers.length-1;i<j;){
+            if(numbers[i]+numbers[j]==target){
+               return new int[]{i+1,j+1}; 
+            }else if(numbers[i]+numbers[j]>target){
+                j--;
+            }else{
+                i++;
+            }
+        }
+        return null;
+    }
+}
+```
+
+#### ==数学==
+
+#### [976. 三角形的最大周长](https://leetcode-cn.com/problems/largest-perimeter-triangle/)
+
+排序后，从后往前找满足两边之和大于第三边的，即面积最大。
+
+```java
+class Solution {
+    public int largestPerimeter(int[] nums) {
+        Arrays.sort(nums);
+        int len = nums.length;
+        for(int i=len-1;i>=2;i--){
+            int a = nums[i];
+            int b = nums[i-1];
+            int c = nums[i-2];
+            if(b+c>a){
+                return a+b+c;
+            }
+        }
+        return 0;
+    }
+}
+```
+
+#### [1056. 易混淆数](https://leetcode-cn.com/problems/confusing-number/)
+
+```java
+
+```
+
+#### [258. 各位相加](https://leetcode-cn.com/problems/add-digits/)
+
+考验数学，不讨论。
+
+```java
+class Solution {
+    public int addDigits(int num) {
+        return (num-1)%9+1;
+    }
+}
+```
+
+#### [1134. 阿姆斯特朗数](https://leetcode-cn.com/problems/armstrong-number/)
+
+主要是利用TSP：Math.log10计算数字位数
+
+```java
+class Solution {
+    public boolean isArmstrong(int n) {
+        int k  = (int)Math.log10(n)+1;
+        int sum = 0,N = n;
+        while(n!=0){
+            sum+=Math.pow(n%10,k);
+            n/=10;
+        }
+        return sum==N?true:false;
+    }
+}
+```
+
+#### [507. 完美数](https://leetcode-cn.com/problems/perfect-number/)
+
+因子一定是大于等于1小于自己，遍历数字，当能整除时，加和，看最后是否和等于原数。
+
+```java
+class Solution {
+    public boolean checkPerfectNumber(int num) {
+        int sum = 0;
+        for(int i=1;i<num;i++){
+            if(num%i==0){
+                sum+=i;
+            }
+        }
+        return num==sum?true:false;
+    }
+}
+```
+
+#### [202. 快乐数](https://leetcode-cn.com/problems/happy-number/)
+
+```java
+```
 
 
 
@@ -1034,7 +1226,7 @@ class Solution {
 
 待完成...
 
-#### 从后向前还原数字的代码
+#### 逆推数字
 
 ```java
 //原数字
@@ -1102,9 +1294,17 @@ int x = 102333;
 int n = (int)(Math.log10(x)+1);//6
 ```
 
-#### 关于子字符串
+#### 关于子字符串的题
 
-对于一个字符串的子字符串
+对于一个字符串的子字符串...
+
+#### 巴什博奕
+
+只有一堆n个物品,两个人轮流从这堆物品中取物,规定每次至少取1个,最多取m个.最后取光者得胜：
+
+> n%(m+1)!=0时，先手总是会赢的
+
+
 
 
 
@@ -1113,4 +1313,26 @@ int n = (int)(Math.log10(x)+1);//6
 #### Arrays.sort()详解
 
 
+
+
+
+
+
+#### 位运算
+
+
+
+- 异或 ^
+
+  如果a、b两个值不相同，则异或结果为1。如果a、b两个值相同，异或结果为0。
+
+  不需要额外空间的方法，就往位运算上想
+
+  异或运算有以下三个性质：
+
+  - 任何数和 0 做异或运算，结果仍然是原来的数
+  - 任何数和其自身做异或运算，结果是 0
+  - 异或运算满足交换律和结合律
+
+  
 
