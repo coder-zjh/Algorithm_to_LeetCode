@@ -1141,6 +1141,156 @@ class Solution {
 ```java
 ```
 
+#### [728. 自除数](https://leetcode-cn.com/problems/self-dividing-numbers/)
+
+```java
+```
+
+#### [1185. 一周中的第几天](https://leetcode-cn.com/problems/day-of-the-week/)
+
+不讨论，看看即可。
+
+```java
+class Solution {
+    public String dayOfTheWeek(int day, int month, int year) {
+        int daily = 0;
+        int theYear = 1971;
+        // int theDay = 5;
+        int sumDay = -1;
+        while (theYear < year) {
+        if (theYear % 400 == 0 || (theYear % 4 == 0 && theYear % 100 != 0)) {
+                //可以被400整除的年份一定是闰年,可以被4整除但是不能被100整除的年份是闰年 366天
+                sumDay = sumDay + 366;
+            } else {
+                sumDay = sumDay + 365;
+            }
+            theYear++;
+        }
+        if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) {//闰年
+            if (month == 1) ;
+            else if (month == 2) sumDay = sumDay + 31;
+            else if (month == 3) sumDay = sumDay + 60;
+            else if (month == 4) sumDay = sumDay + 91;
+            else if (month == 5) sumDay = sumDay + 121;
+            else if (month == 6) sumDay = sumDay + 152;
+            else if (month == 7) sumDay = sumDay + 182;
+            else if (month == 8) sumDay = sumDay + 213;
+            else if (month == 9) sumDay = sumDay + 244;
+            else if (month == 10) sumDay = sumDay + 274;
+            else if (month == 11) sumDay = sumDay + 305;
+            else if (month == 12) sumDay = sumDay + 335;
+        }else {//平年
+            if (month == 1) ;
+            else if (month == 2) sumDay = sumDay + 31;
+            else if (month == 3) sumDay = sumDay + 59;
+            else if (month == 4) sumDay = sumDay + 90;
+            else if (month == 5) sumDay = sumDay + 120;
+            else if (month == 6) sumDay = sumDay + 151;
+            else if (month == 7) sumDay = sumDay + 181;
+            else if (month == 8) sumDay = sumDay + 212;
+            else if (month == 9) sumDay = sumDay + 243;
+            else if (month == 10) sumDay = sumDay + 273;
+            else if (month == 11) sumDay = sumDay + 304;
+            else if (month == 12) sumDay = sumDay + 334;
+        }
+        sumDay = sumDay + day;
+        daily = sumDay % 7;
+        String[] str = new String[7];
+        str[0] =  "Friday";
+        str[1] =  "Saturday";
+        str[2] = "Sunday";
+        str[3] =  "Monday";
+        str[4] = "Tuesday";
+        str[5] =  "Wednesday";
+        str[6] =  "Thursday";
+        return str[daily];
+    }
+}
+```
+
+#### [1360. 日期之间隔几天](https://leetcode-cn.com/problems/number-of-days-between-two-dates/)
+
+不讨论。
+
+```java
+class Solution {
+    int[] _365M = new int[]{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    public int daysBetweenDates(String date1, String date2) {
+        int[] dates1 = parseDate(date1), dates2 = parseDate(date2);
+        return Math.abs(calculateDays(dates1[0], dates1[1], dates1[2]) - calculateDays(dates2[0], dates2[1], dates2[2]));
+    }
+
+    int calculateDays(int year, int month, int day) {
+        int dayC1 = day - 1;
+        for (int i = month; i > 1; i--) dayC1 += _365M[i - 1 - 1];
+        if ((year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) && month > 2) dayC1++;
+        dayC1 += (365 * (year - 1) + (year - 1) / 4 - (year - 1) / 100 + (year - 1) / 400);
+        return dayC1;
+    }
+
+    int[] parseDate(String date) {
+        return new int[]{Integer.valueOf(date.substring(0, 4)), Integer.valueOf(date.substring(5, 7)), Integer.valueOf(date.substring(8, 10))};
+    }
+}
+```
+
+#### ==字符串==
+
+#### [796. 旋转字符串](https://leetcode-cn.com/problems/rotate-string/)
+
+将字符串首尾相连，则形成这个字符串移动的所有形式。
+
+```java
+class Solution {
+    public boolean rotateString(String s, String goal) {
+        return s.length() == goal.length() && (s + s).contains(goal);
+    }
+}
+```
+
+#### [520. 检测大写字母](https://leetcode-cn.com/problems/detect-capital/)
+
+如果第一位及之后的字母都是小写，则无所谓第一位字母是否大小写。
+
+```java
+class Solution {
+    public boolean detectCapitalUse(String word) {
+        return (word.equals(word.toUpperCase()))||(word.substring(1).toLowerCase().equals(word.substring(1)));
+    }
+}
+```
+
+
+
+#### ==数组==
+
+#### [1991. 找到数组的中间位置](https://leetcode-cn.com/problems/find-the-middle-index-in-array/)
+
+算出数组和sum，设left_sum为中间位置的左边部分的加和，遍历数组，在遍历中不断从sum中减去遍历值，则这个sum就是中间右部分的值。
+
+```java
+class Solution {
+    public int findMiddleIndex(int[] nums) {
+        int sum = 0;
+        for(int a:nums){
+            sum+=a;
+        }
+        int left_sum = 0;
+        for(int i=0;i<nums.length;i++){
+            sum-=nums[i];
+            if(left_sum==sum){
+                return i;
+            }
+            left_sum+=nums[i];
+        }
+        return -1;
+    }
+}
+```
+
+
+
 
 
 
