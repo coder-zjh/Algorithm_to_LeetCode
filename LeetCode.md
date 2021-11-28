@@ -1,4 +1,4 @@
-# LeetCode
+### LeetCode
 
 > LeetCode刷题笔记，语言Java，记录刷题过程中的某些思路、代码、涉及知识点和解题Tips。
 
@@ -937,11 +937,7 @@ class Solution {
 }
 ```
 
-
-
-
-
-#### ==迷==
+### 迷
 
 #### [292. Nim 游戏](https://leetcode-cn.com/problems/nim-game/)
 
@@ -975,9 +971,7 @@ class Solution {
 }
 ```
 
-
-
-#### ==位运算==
+### 位运算
 
 #### [67. 二进制求和](https://leetcode-cn.com/problems/add-binary/)
 
@@ -1058,7 +1052,7 @@ class Solution {
 }
 ```
 
-#### ==数学==
+### 数学
 
 #### [976. 三角形的最大周长](https://leetcode-cn.com/problems/largest-perimeter-triangle/)
 
@@ -1235,7 +1229,7 @@ class Solution {
 }
 ```
 
-#### ==字符串==
+### 字符串
 
 #### [796. 旋转字符串](https://leetcode-cn.com/problems/rotate-string/)
 
@@ -1261,9 +1255,11 @@ class Solution {
 }
 ```
 
+------
 
 
-#### ==数组==
+
+### 数组
 
 #### [1991. 找到数组的中间位置](https://leetcode-cn.com/problems/find-the-middle-index-in-array/)
 
@@ -1288,10 +1284,6 @@ class Solution {
     }
 }
 ```
-
-
-
-
 
 
 
@@ -1470,7 +1462,54 @@ int n = (int)(Math.log10(x)+1);//6
 
 #### 位运算
 
+来源：https://leetcode-cn.com/problems/power-of-two/solution/5chong-jie-fa-ni-ying-gai-bei-xia-de-wei-6x9m/
 
+在计算机里面，任何数据最终都是用数字来表示的，并且计算机运算单元只认识高低电位，转化成我们认识的逻辑，也就是 0和1 。
+
+![image.png](pic/1615691379-TPWDJp-image-20211128213928656.png)
+
+- 常用位操作
+
+  ```
+  (x & 1) == 1 ---等价---> (x % 2 == 1) // 判断奇数
+  (x & 1) == 0 ---等价---> (x % 2 == 0) // 判断偶数
+  x / 2 ---等价---> x >> 1
+  x &= (x - 1) ------> 把x最低位的二进制1给去掉
+  x & -x -----> 得到最低位的1
+  x & ~x -----> 0
+  ```
+
+- 指定位置的位运算
+
+  ```
+  将X最右边的n位清零：x & (~0 << n)
+  获取x的第n位值：(x >> n) & 1
+  获取x的第n位的幂值：x & (1 << n)
+  仅将第n位置为1：x | (1 << n)
+  仅将第n位置为0：x & (~(1 << n))
+  将x最高位至第n位（含）清零：x & ((1 << n) - 1)
+  将第n位至第0位（含）清零：x & (~((1 << (n + 1)) - 1))
+  ```
+
+- 异或结合性
+
+  ```
+  x ^ 0 = x, x ^ x = 0
+  x ^ (~0) = ~x, x ^ (~x) = ~0
+  a ^ b = c, a ^ c = b, b ^ c = a
+  
+  (有没有点乘法结合律的意思)
+  字母表示：(a ^ b) ^ c = a ^ (b ^ c)
+  图形表示：(☆ ^ ◇) ^ △ = ☆ ^ (◇ ^ △)
+  ```
+
+- 大小写位运算
+
+  ```java
+  大写变小写、小写变大写：字符 ^= 32 （大写 ^= 32 相当于 +32，小写 ^= 32 相当于 -32）
+  大写变小写、小写变小写：字符 |= 32 （大写 |= 32 就相当于+32，小写 |= 32 不变）
+  大写变大写、小写变大写：字符 &= -33 （大写 ^= -33 不变，小写 ^= -33 相当于 -32）
+  ```
 
 - 异或 ^
 
