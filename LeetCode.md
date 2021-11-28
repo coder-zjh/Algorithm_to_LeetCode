@@ -1,30 +1,8 @@
-### LeetCode
+# LeetCode
 
 > LeetCode刷题笔记，语言Java，记录刷题过程中的某些思路、代码、涉及知识点和解题Tips。
 
 ## Easy
-
-#### [1. 两数之和](https://leetcode-cn.com/problems/two-sum/)
-
-1. 双循环嵌套做法，思路直接但较低效，代码略。
-
-2. 哈希表做法，利用hash表存放数组的值与下标，如果target减去当前数组值的所得结果在哈希表中，则得出答案。
-
-```java
-class Solution {
-    public int[] twoSum(int[] nums, int target) {
-        HashMap<Integer,Integer> hm = new HashMap<>();
-        for(int i=0;i<nums.length;i++){
-            if(hm.containsKey(target-nums[i])){
-                return new int[]{hm.get(target-nums[i]),i};
-            }else{
-                hm.put(nums[i],i);
-            }
-        }
-        return new int[]{0};
-    }
-}
-```
 
 #### [7. 整数反转](https://leetcode-cn.com/problems/reverse-integer/)
 
@@ -74,121 +52,6 @@ class Solution {
         //如果复现的数和x相等的话，则倒推和正推是相等的，即是回文数
         return x==reversed||x==reversed/10;
 
-    }
-}
-```
-
-#### [13. 罗马数字转整数](https://leetcode-cn.com/problems/roman-to-integer/)
-
-找到罗马数字组成的规律，就很好解决。
-
-```java
-class Solution {
-    public int romanToInt(String s) {
-        // 规律是：从左到右，如果前一个数小于后一个数，则后数减去前数;反之前数加后数
-        int result = 0;
-        int preNum = getValue(s.charAt(0));
-        for(int i=1;i<s.length();i++){
-            int num = getValue(s.charAt(i));
-            if(preNum < num){
-                result = result-preNum;
-            }else{
-                result = result+preNum;
-            }
-            preNum = num;
-        }
-        result += preNum;
-        return result;
-    }
-  
-// 先做好字母与数字的映射
-    public int getValue(char x){
-        switch(x){
-            case 'I':return 1;
-            case 'V':return 5;
-            case 'X':return 10;
-            case 'L':return 50;
-            case 'C':return 100;
-            case 'D':return 500;
-            case 'M':return 1000;
-            default: return 0;
-        }
-    }
-}
-```
-
-#### [14. 最长公共前缀](https://leetcode-cn.com/problems/longest-common-prefix/)
-
-
-
-```java
-class Solution {
-    public String longestCommonPrefix(String[] strs) {
-        if(strs.length==0){
-            return "";
-        }
-        // 理解这句话：公共前缀比所有字符串都短，所以可以随便选一个
-        // 随便先选第一个字符串的值作为公共前缀
-        String s = strs[0];
-        // 遍历每一个数组元素
-        for(String str:strs){
-            while(!str.startsWith(s)){
-                //如果公共前缀的长度被缩小到0，退出，说明没有公共前缀
-                if(s.length()==0){
-                    return "";
-                }
-                //继续缩小公共前缀的范围
-                s = s.substring(0,s.length()-1);
-            }
-        }
-        return s;
-    }
-}
-```
-
-#### [20. 有效的括号](https://leetcode-cn.com/problems/valid-parentheses/)
-
-利用栈，遍历字符串中每个字符，遇到题中所提字符，则用栈存放该字符的对应字符，如果下一个字符与栈中最新元素相等，则说明匹配上了，而如果栈是空，则说明出现了非所提字符的情况，或是下一个字符与栈中最新元素不等，则说明出现了不匹配的情况。
-
-```java
-class Solution {
-    public boolean isValid(String s) {
-        Stack<Character> stack = new Stack<Character>();
-        // 遍历字符串的每一个字符
-        // 遇到([]{时，在栈中记录下需匹配的字符，继续向下匹配，
-        // 如果下一个字符是栈中最新的字符，则表示下一个字符与上一个字符匹配，继续向下遍历
-        for(char c: s.toCharArray()){
-            if(c=='('){
-                stack.push(')');
-            }
-            else if(c=='['){
-                stack.push(']');
-            }
-            else if(c=='{'){
-                stack.push('}');
-            }
-            // stack.isEmpty()：字符串中不存在左半部分
-            // c!=stack.pop()：当目前字符与栈中不匹配时，则退出
-            else if(stack.isEmpty()||c!=stack.pop()){
-                return false;
-            }
-        }
-        return stack.isEmpty();
-    }
-}
-```
-
-#### [58. 最后一个单词的长度](https://leetcode-cn.com/problems/length-of-last-word/)
-
-1. 
-2. 从后往前的做法
-
-```java
-class Solution {
-    public int lengthOfLastWord(String s) {
-      // 去首尾空格后，从后往前推，遇到第一个空格为止，则最后一个单词就在这个范围内
-        s = s.trim();
-        return s.length()-s.lastIndexOf(" ")-1;
     }
 }
 ```
@@ -685,23 +548,6 @@ class Solution {
 }
 ```
 
-#### [28. 实现 strStr()](https://leetcode-cn.com/problems/implement-strstr/)
-
-1. 直接使用String.indexOf，不提升码力。
-
-```java
-class Solution {
-    public int strStr(String haystack, String needle) {
-        return haystack.indexOf(needle);
-    }
-}
-```
-
-2. 
-
-```java
-```
-
 
 
 #### [125. 验证回文串](https://leetcode-cn.com/problems/valid-palindrome/)
@@ -761,58 +607,6 @@ class Solution {
             }
         }
         return true;
-    }
-}
-```
-
-#### [26. 删除有序数组中的重复项](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/)
-
-因为是有序数组，所以比较前后两个值是否相同，如果相同说明重复，下标前进一步，同时当前值换为后值；如果不同则继续。
-
-```java
-class Solution {
-    public int removeDuplicates(int[] nums) {
-        int i=0;
-        if(nums.length<2){
-            return nums.length;
-        }
-        for(int j=1;j<nums.length;j++){
-            if(nums[i]!=nums[j]){
-                i++;//i为多少则重复的数有多少
-                nums[i]=nums[j];
-            }
-        }
-        return i+1;
-    }
-}
-```
-
-#### [1464. 数组中两元素的最大乘积](https://leetcode-cn.com/problems/maximum-product-of-two-elements-in-an-array/)
-
-1. 先用Arrays.sort()排序，然后将后两位做如题的乘法。代码略。
-2. O(n)算出数组中最大的两个数，这个代码可以思考学习。
-
-```java
-class Solution {
-    public int maxProduct(int[] nums) {
-        if(nums.length == 2){
-            return (nums[0] - 1) * (nums[1] - 1);
-        }
-        // n1最大值，n2次大值
-        int n1=0,n2=0;
-        /**
-            遍历数组，遇到比最大值n1大的nums[i]，说明此时nums[i]是最大，同时，次大值变为了n1，注意这里的赋值顺序。
-            继续遍历，如果出现了比次大值更大的nums[i]，则替换次大值。
-         */
-        for(int i=0;i<nums.length;i++){
-            if(nums[i]>n1){
-                n2 = n1;
-                n1 = nums[i];
-            }else if(nums[i]>n2){
-                n2 = nums[i];
-            }
-        }
-        return (n1-1)*(n2-1);
     }
 }
 ```
@@ -990,7 +784,49 @@ class Solution {
 }
 ```
 
-#### ==双指针==
+#### [190. 颠倒二进制位](https://leetcode-cn.com/problems/reverse-bits/)
+
+```java
+```
+
+#### [191. 位1的个数](https://leetcode-cn.com/problems/number-of-1-bits/)
+
+```java
+```
+
+#### [231. 2 的幂](https://leetcode-cn.com/problems/power-of-two/)
+
+1. 位运算解法1
+
+```java
+class Solution {
+    public boolean isPowerOfTwo(int n) {
+        return n > 0 && (n & (n - 1)) == 0;
+    }
+}
+```
+
+2. 位运算解法2
+
+```java
+class Solution {
+    public boolean isPowerOfTwo(int n) {
+        return n > 0 && (n & (-n)) == n;
+    }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+### 双指针
 
 #### [344. 反转字符串](https://leetcode-cn.com/problems/reverse-string/)
 
@@ -1231,6 +1067,143 @@ class Solution {
 
 ### 字符串
 
+#### [13. 罗马数字转整数](https://leetcode-cn.com/problems/roman-to-integer/)
+
+找到罗马数字组成的规律，就很好解决。
+
+```java
+class Solution {
+    public int romanToInt(String s) {
+        // 规律是：从左到右，如果前一个数小于后一个数，则后数减去前数;反之前数加后数
+        int result = 0;
+        int preNum = getValue(s.charAt(0));
+        for(int i=1;i<s.length();i++){
+            int num = getValue(s.charAt(i));
+            if(preNum < num){
+                result = result-preNum;
+            }else{
+                result = result+preNum;
+            }
+            preNum = num;
+        }
+        result += preNum;
+        return result;
+    }
+  
+// 先做好字母与数字的映射
+    public int getValue(char x){
+        switch(x){
+            case 'I':return 1;
+            case 'V':return 5;
+            case 'X':return 10;
+            case 'L':return 50;
+            case 'C':return 100;
+            case 'D':return 500;
+            case 'M':return 1000;
+            default: return 0;
+        }
+    }
+}
+```
+
+#### [14. 最长公共前缀](https://leetcode-cn.com/problems/longest-common-prefix/)
+
+
+
+```java
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        if(strs.length==0){
+            return "";
+        }
+        // 理解这句话：公共前缀比所有字符串都短，所以可以随便选一个
+        // 随便先选第一个字符串的值作为公共前缀
+        String s = strs[0];
+        // 遍历每一个数组元素
+        for(String str:strs){
+            while(!str.startsWith(s)){
+                //如果公共前缀的长度被缩小到0，退出，说明没有公共前缀
+                if(s.length()==0){
+                    return "";
+                }
+                //继续缩小公共前缀的范围
+                s = s.substring(0,s.length()-1);
+            }
+        }
+        return s;
+    }
+}
+```
+
+#### [20. 有效的括号](https://leetcode-cn.com/problems/valid-parentheses/)
+
+利用栈，遍历字符串中每个字符，遇到题中所提字符，则用栈存放该字符的对应字符，如果下一个字符与栈中最新元素相等，则说明匹配上了，而如果栈是空，则说明出现了非所提字符的情况，或是下一个字符与栈中最新元素不等，则说明出现了不匹配的情况。
+
+```java
+class Solution {
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<Character>();
+        // 遍历字符串的每一个字符
+        // 遇到([]{时，在栈中记录下需匹配的字符，继续向下匹配，
+        // 如果下一个字符是栈中最新的字符，则表示下一个字符与上一个字符匹配，继续向下遍历
+        for(char c: s.toCharArray()){
+            if(c=='('){
+                stack.push(')');
+            }
+            else if(c=='['){
+                stack.push(']');
+            }
+            else if(c=='{'){
+                stack.push('}');
+            }
+            // stack.isEmpty()：字符串中不存在左半部分
+            // c!=stack.pop()：当目前字符与栈中不匹配时，则退出
+            else if(stack.isEmpty()||c!=stack.pop()){
+                return false;
+            }
+        }
+        return stack.isEmpty();
+    }
+}
+```
+
+#### [28. 实现 strStr()](https://leetcode-cn.com/problems/implement-strstr/)
+
+1. 直接使用String.indexOf，不提升码力。
+
+```java
+class Solution {
+    public int strStr(String haystack, String needle) {
+        return haystack.indexOf(needle);
+    }
+}
+```
+
+2. 
+
+```java
+
+```
+
+#### [58. 最后一个单词的长度](https://leetcode-cn.com/problems/length-of-last-word/)
+
+1. 
+2. 从后往前的做法
+
+```java
+class Solution {
+    public int lengthOfLastWord(String s) {
+      // 去首尾空格后，从后往前推，遇到第一个空格为止，则最后一个单词就在这个范围内
+        s = s.trim();
+        return s.length()-s.lastIndexOf(" ")-1;
+    }
+}
+```
+
+
+
+
+
 #### [796. 旋转字符串](https://leetcode-cn.com/problems/rotate-string/)
 
 将字符串首尾相连，则形成这个字符串移动的所有形式。
@@ -1260,6 +1233,85 @@ class Solution {
 
 
 ### 数组
+
+#### [1. 两数之和](https://leetcode-cn.com/problems/two-sum/)
+
+1. 双循环嵌套做法，思路直接但较低效，代码略。
+
+2. 哈希表做法，利用hash表存放数组的值与下标，如果target减去当前数组值的所得结果在哈希表中，则得出答案。
+
+```java
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        HashMap<Integer,Integer> hm = new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            if(hm.containsKey(target-nums[i])){
+                return new int[]{hm.get(target-nums[i]),i};
+            }else{
+                hm.put(nums[i],i);
+            }
+        }
+        return new int[]{0};
+    }
+}
+```
+
+#### [26. 删除有序数组中的重复项](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/)
+
+因为是有序数组，所以比较前后两个值(ab)是否相同，如果相同说明重复，下标前进一步，同时当前值a换为后值b；如果不同则继续。
+
+```java
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int i=0;
+      // 题中并未说明数组长度一定大于2
+        if(nums.length<2){
+            return nums.length;
+        }
+        for(int j=1;j<nums.length;j++){
+            if(nums[i]!=nums[j]){
+                i++;//i为多少则重复的数有多少
+                nums[i]=nums[j];
+            }
+        }
+        return i+1;
+    }
+}
+```
+
+#### [1464. 数组中两元素的最大乘积](https://leetcode-cn.com/problems/maximum-product-of-two-elements-in-an-array/)
+
+1. 先用Arrays.sort()排序，然后将后两位做如题的乘法。代码略。
+2. O(n)算出数组中最大的两个数，这个代码可以思考学习。
+
+```java
+class Solution {
+    public int maxProduct(int[] nums) {
+        if(nums.length == 2){
+            return (nums[0] - 1) * (nums[1] - 1);
+        }
+        // n1最大值，n2次大值
+        int n1=0,n2=0;
+        /**
+            遍历数组，遇到比最大值n1大的nums[i]，说明此时nums[i]是最大，同时，次大值变为了n1，注意这里的赋值顺序。
+            继续遍历，如果出现了比次大值更大的nums[i]，则替换次大值。
+         */
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]>n1){
+                n2 = n1;
+                n1 = nums[i];
+            }else if(nums[i]>n2){
+                n2 = nums[i];
+            }
+        }
+        return (n1-1)*(n2-1);
+    }
+}
+```
+
+
+
+
 
 #### [1991. 找到数组的中间位置](https://leetcode-cn.com/problems/find-the-middle-index-in-array/)
 
@@ -1446,7 +1498,9 @@ int n = (int)(Math.log10(x)+1);//6
 
 > n%(m+1)!=0时，先手总是会赢的
 
+#### 数列求和公式
 
+`n(n+1)/2`
 
 
 
