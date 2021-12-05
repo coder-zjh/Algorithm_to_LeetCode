@@ -472,18 +472,6 @@ class Solution {
 }
 ```
 
-#### [1323. 6 和 9 组成的最大数字](https://leetcode-cn.com/problems/maximum-69-number/)
-
-要最大数字，肯定是把高位的6改成9。利用String类的replaceFirst方法。
-
-```java
-class Solution {
-    public int maximum69Number (int num) {
-        return Integer.valueOf(String.valueOf(num).replaceFirst("6","9"));
-    }
-}
-```
-
 #### [1475. 商品折扣后的最终价格](https://leetcode-cn.com/problems/final-prices-with-a-special-discount-in-a-shop/)
 
 1. 双循环做法，比较直观，易理解。
@@ -828,6 +816,38 @@ class Solution {
 
 ### 双指针
 
+#### [26. 删除有序数组中的重复项](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/)
+
+因为是有序数组，所以比较前后两个值(ab)是否相同，如果相同说明重复，下标前进一步，同时当前值a换为后值b；如果不同则继续。
+
+```java
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int i=0;
+      // 题中并未说明数组长度一定大于2
+        if(nums.length<2){
+            return nums.length;
+        }
+        for(int j=1;j<nums.length;j++){
+            if(nums[i]!=nums[j]){
+                i++;//i为多少则重复的数有多少
+                nums[i]=nums[j];
+            }
+        }
+        return i+1;
+    }
+}
+```
+
+#### [27. 移除元素](https://leetcode-cn.com/problems/remove-element/)
+
+```java
+```
+
+
+
+
+
 #### [344. 反转字符串](https://leetcode-cn.com/problems/reverse-string/)
 
 1. 双指针两端向内替换
@@ -1065,6 +1085,29 @@ class Solution {
 }
 ```
 
+#### [1323. 6 和 9 组成的最大数字](https://leetcode-cn.com/problems/maximum-69-number/)
+
+要最大数字，肯定是把高位的6改成9。利用String类的replaceFirst方法。
+
+```java
+class Solution {
+    public int maximum69Number (int num) {
+        return Integer.valueOf(String.valueOf(num).replaceFirst("6","9"));
+    }
+}
+```
+
+### 几何
+
+#### [812. 最大三角形面积](https://leetcode-cn.com/problems/largest-triangle-area/)
+
+```java
+```
+
+
+
+
+
 ### 字符串
 
 #### [13. 罗马数字转整数](https://leetcode-cn.com/problems/roman-to-integer/)
@@ -1256,28 +1299,16 @@ class Solution {
 }
 ```
 
-#### [26. 删除有序数组中的重复项](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/)
-
-因为是有序数组，所以比较前后两个值(ab)是否相同，如果相同说明重复，下标前进一步，同时当前值a换为后值b；如果不同则继续。
+#### [27. 移除元素](https://leetcode-cn.com/problems/remove-element/)
 
 ```java
-class Solution {
-    public int removeDuplicates(int[] nums) {
-        int i=0;
-      // 题中并未说明数组长度一定大于2
-        if(nums.length<2){
-            return nums.length;
-        }
-        for(int j=1;j<nums.length;j++){
-            if(nums[i]!=nums[j]){
-                i++;//i为多少则重复的数有多少
-                nums[i]=nums[j];
-            }
-        }
-        return i+1;
-    }
-}
 ```
+
+
+
+
+
+
 
 #### [1464. 数组中两元素的最大乘积](https://leetcode-cn.com/problems/maximum-product-of-two-elements-in-an-array/)
 
