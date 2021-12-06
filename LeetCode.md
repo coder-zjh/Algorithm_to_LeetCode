@@ -1368,6 +1368,42 @@ class Solution {
 }
 ```
 
+### 链表
+
+#### [21. 合并两个有序链表](https://leetcode-cn.com/problems/merge-two-sorted-lists/)
+
+如果两个链表中有一个是空链表，则另一个自动成为结果链表；
+
+如果l1值小于l2值，则结果链表的下一位要观察：l1下一个值和当前l2的值的大小
+
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if(l1==null){
+            return l2;
+        }else if(l2==null){
+            return l1;
+        }else if(l1.val<l2.val){
+            l1.next = mergeTwoLists(l1.next,l2);
+            return l1;
+        }else{
+            l2.next = mergeTwoLists(l2.next,l1); 
+            return l2;
+        }
+    }
+}
+```
+
 
 
 
