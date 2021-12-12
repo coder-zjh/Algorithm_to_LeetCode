@@ -1301,8 +1301,51 @@ class Solution {
 
 #### [27. 移除元素](https://leetcode-cn.com/problems/remove-element/)
 
+1. 遍历法，遍历数组，遇到非val的值，记录下来，然后下标继续
+
 ```java
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        int index = 0;
+        for(int num:nums){
+            if(num!=val){
+                nums[index++] = num;
+            }
+        }
+        return index;
+    }
+}
 ```
+
+2. 双指针法
+
+   left指针指向要赋值的位置，right指针指向当前指针指向的值，
+
+   两指针同一起点出发，遇到非val则left指针记录下当前值，然后加一，
+
+   然后两指针同时向右移动一步,最后left的值就是长度。
+
+   ```java
+   class Solution {
+       public int removeElement(int[] nums, int val) {
+           // 双指针做法1
+   
+           int left = 0,n = nums.length;
+           for(int right = 0;right<n;right++){
+               if(nums[right]!=val){
+                   nums[left] = nums[right];
+                   left++;
+               }
+           }
+           return left;
+       }
+   }
+   ```
+
+3. 双指针法2：优化
+
+   ```java
+   ```
 
 
 
