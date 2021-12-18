@@ -753,6 +753,24 @@ class Solution {
 }
 ```
 
+#### [319. 灯泡开关](https://leetcode-cn.com/problems/bulb-switcher/)
+
+思路没有完全理解透彻，待补充...
+
+```java
+class Solution {
+    public int bulbSwitch(int n) {
+        return (int)Math.sqrt(n);
+    }
+}
+```
+
+
+
+
+
+
+
 ### 位运算
 
 #### [67. 二进制求和](https://leetcode-cn.com/problems/add-binary/)
@@ -907,6 +925,43 @@ class Solution {
     }
 }
 ```
+
+#### [35. 搜索插入位置](https://leetcode-cn.com/problems/search-insert-position/)
+
+注意mid的赋值，`int mid = left+(right-left)/2`，这个写法可以规避`(left+right)/2`溢出的情况；
+
+因为是二分法查找，所以
+
+- 如果target大于中间值，则说明target在中轴右侧，则窗口的左边界要右移到中轴
+- 如果target小于中间值，则说明target在中轴左侧，则窗口的右边界要左移到中轴
+
+```java
+class Solution {
+    public int searchInsert(int[] nums, int target) {
+        // 按题意需使用时间复杂度为O(log n)的算法，考虑二分查找。
+        int left = 0,right = nums.length-1;
+        while(left<=right){
+            int mid = left+(right-left)/2;
+            if(nums[mid]==target){
+                return mid;
+            }else if(nums[mid]<target){
+                left = mid+1;
+            }else if(nums[mid]>target){
+                right = mid-1;
+            }
+        }
+        return left;
+    }
+}
+```
+
+
+
+
+
+
+
+
 
 ### 数学
 
@@ -1504,6 +1559,18 @@ class Solution {
             max = Math.max(max,minHeight*(j-i+1));
         }
         return max;
+    }
+}
+```
+
+#### [877. 石子游戏](https://leetcode-cn.com/problems/stone-game/)
+
+待补充思路...
+
+```java
+class Solution {
+    public boolean stoneGame(int[] piles) {
+        return true;
     }
 }
 ```
